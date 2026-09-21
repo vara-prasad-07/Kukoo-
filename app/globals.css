@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+}
+
+html,
+body {
+  background: #0d0d0f;
+  color: #ededf0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Ambient warmth behind the whole stage so the phone reads as lit, not pasted on. */
+.stage-glow::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60rem 40rem at 22% 18%, rgba(255, 122, 92, 0.1), transparent 62%),
+    radial-gradient(48rem 34rem at 82% 82%, rgba(96, 165, 250, 0.07), transparent 60%);
+  z-index: 0;
+}
+
+.scroll-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: #2f2f38;
+  border-radius: 99px;
+}
+.scroll-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* The phone body. Kept as one place so every screen inside matches. */
+.device {
+  border-radius: 2.6rem;
+  background: linear-gradient(170deg, #1c1c21 0%, #121215 46%, #0e0e11 100%);
+  box-shadow:
+    0 0 0 1.5px #303038,
+    0 0 0 8px #141418,
+    0 0 0 9px #35353e,
+    0 34px 80px -18px rgba(0, 0, 0, 0.9),
+    0 0 70px -12px rgba(255, 122, 92, 0.16);
+}
+
+.notch {
+  background: #08080a;
+  border-radius: 0 0 1rem 1rem;
+}
+
+.glass {
+  background: rgba(26, 26, 31, 0.72);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Fine grid used behind the timeline so blocks read as sitting on a clock. */
+.timeline-grid {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 12.5% 100%;
+}
