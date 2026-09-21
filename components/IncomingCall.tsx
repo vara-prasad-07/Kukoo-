@@ -53,7 +53,7 @@ export function IncomingCall({ onAnswer, onDecline }: { onAnswer: () => void; on
         </div>
 
         <h2 className="font-display text-[2.35rem] leading-none text-white">Your Tasks</h2>
-        <p className="mt-2.5 text-[12.5px] text-white/45">mobile · RingList</p>
+        <p className="mt-2.5 text-[12.5px] text-white/45">mobile · Kukoo</p>
       </div>
 
       <div className="relative w-full">

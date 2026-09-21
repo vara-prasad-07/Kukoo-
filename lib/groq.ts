@@ -10,7 +10,8 @@ export const MODELS = {
   dialogue: process.env.GROQ_DIALOGUE_MODEL || "openai/gpt-oss-20b",
   /** Stands in for laptop compute over Office Kit: heavy replanning. */
   planner: process.env.GROQ_PLANNER_MODEL || "openai/gpt-oss-120b",
-  stt: process.env.GROQ_STT_MODEL || "whisper-large-v3-turbo",
+  // large-v3 over turbo: same latency in practice, better on accented English.
+  stt: process.env.GROQ_STT_MODEL || "whisper-large-v3",
   tts: process.env.GROQ_TTS_MODEL || "canopylabs/orpheus-v1-english",
 } as const;
 
@@ -121,12 +122,12 @@ export async function chat(opts: ChatOpts): Promise<GroqMessage> {
 }
 
 /**
- * Vocabulary hint for the decoder. Deliberately a bare comma list, NOT a
- * sentence: Whisper echoes its prompt verbatim when the audio is silent or
- * clipped, and a sentence-shaped prompt comes back looking like a real
- * transcript. A keyword list still biases spelling without reading as speech.
+ * No `prompt` is sent to Whisper. A/B tested against real speech, the vocabulary
+ * hint gave zero accuracy benefit on clean audio — and it is exactly what the
+ * decoder echoed back as a fake transcript when the audio was poor. The words
+ * below are kept only so that echo can still be recognised and discarded.
  */
-const STT_VOCAB = "RingList, to-do, reschedule, deadline, priority, replan, standup, deck, follow-up, Priya";
+const STT_VOCAB = "RingList, Kukoo, to-do, reschedule, deadline, priority, replan, standup, deck, follow-up, Priya";
 
 /**
  * Things Whisper emits when it hears nothing useful. These are artifacts of the
@@ -169,7 +170,6 @@ export async function transcribe(file: Blob, filename: string): Promise<string> 
   fd.append("file", file, filename);
   fd.append("model", MODELS.stt);
   fd.append("response_format", "json");
-  fd.append("prompt", STT_VOCAB);
   // Pinning the language stops Whisper misdetecting short clips as another
   // language and "translating" them into nonsense.
   fd.append("language", "en");

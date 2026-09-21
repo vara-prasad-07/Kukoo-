@@ -1,8 +1,8 @@
-# RingList — Project Context
+# Kukoo — Project Context
 
 **iQOO Hackathon 2026 · Productivity track · Hyderabad city battle (Sept 26–27)**
 
-> Your to-do list stops waiting to be opened, and calls you instead.
+> **We Call. You Do.** Your to-do list stops waiting to be opened, and calls you instead.
 
 This document covers the idea, the architecture, and the impact. For setup and code
 layout, see [README.md](README.md).
@@ -28,7 +28,7 @@ wrong axis. The list is already good enough; the retrieval habit is what's broke
 **Invert the interface. The assistant initiates contact — the way a phone call does.**
 
 A phone call is the one notification pattern humans have not learned to ignore. It takes
-over the screen, it makes noise, it demands a decision now. RingList borrows that
+over the screen, it makes noise, it demands a decision now. Kukoo borrows that
 affordance for your own tasks.
 
 At a scheduled moment — or whenever the user calls in — the phone shows a full-screen
@@ -55,7 +55,7 @@ list from scratch.
 
 ### Why this wins on the axis that matters
 
-| | Typical to-do app | RingList |
+| | Typical to-do app | Kukoo |
 |---|---|---|
 | Who starts | User must remember | **The list starts it** |
 | Interface | Screen, tapping | Voice, hands-free |
@@ -106,7 +106,7 @@ the CPU or GPU — and without a network round trip.
 
 | Stage | Model | Runtime | Notes |
 |---|---|---|---|
-| **STT** | Whisper-Base/Small (EN) | Qualcomm AI Hub → QNN | Pre-optimized builds published for Snapdragon |
+| **STT** | Whisper (EN) | Qualcomm AI Hub → QNN | Pre-optimized builds published for Snapdragon |
 | **Dialogue LLM** | Llama 3.2 3B Instruct or Qwen 2.5 3B, **INT4** | Genie / QAIRT GenAI extensions | 3B INT4 fits comfortably in flagship RAM |
 | **Task engine** | — | Kotlin + Room/SQLite | Deterministic. No model involved |
 | **TTS** | Android `TextToSpeech`, or Piper/Sherpa-ONNX | System API / ONNX Runtime | System TTS is already on-device |
@@ -148,7 +148,7 @@ hold mic ──▶ Whisper ──▶ Dialogue agent ──▶ Task engine ──
 
 | Target (on-device) | Demo (today) | Swapped by changing |
 |---|---|---|
-| Whisper on Hexagon NPU | `whisper-large-v3-turbo` via Groq | `lib/groq.ts` |
+| Whisper on Hexagon NPU | `whisper-large-v3` via Groq | `lib/groq.ts` |
 | Llama 3.2 3B INT4 on NPU | `gpt-oss-20b` via Groq | `MODELS.dialogue` |
 | Laptop model over Office Kit | `gpt-oss-120b` via Groq | `MODELS.planner` |
 | Room/SQLite task store | In-memory + client state | `lib/taskEngine.ts` |
@@ -162,7 +162,7 @@ contract, and the routing logic are all backend-independent** and carry over as-
 
 | Stage | Latency |
 |---|---|
-| STT (Whisper turbo) | ~350 ms |
+| STT (Whisper large-v3) | ~250 ms |
 | Opening briefing | ~420 ms |
 | Simple edit turn (end to end) | ~870 ms – 1.4 s |
 | Full replan turn (incl. handoff) | ~1.7 – 2.4 s |

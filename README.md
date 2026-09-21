@@ -1,4 +1,4 @@
-# RingList — the to-do list that calls you
+# Kukoo — We Call. You Do.
 
 Round-1 demo build for the iQOO Hackathon 2026 Productivity track.
 
@@ -48,7 +48,7 @@ hold mic ──▶ Whisper ──▶ Dialogue agent ──▶ Task engine ──
 
 | Piece | Where | What it is |
 |---|---|---|
-| STT | `lib/groq.ts` | `whisper-large-v3-turbo`, ~350ms |
+| STT | `lib/groq.ts` | `whisper-large-v3`, ~250ms |
 | Dialogue agent | `lib/agents/dialogue.ts` | Small model, tool-calling, holds the conversation |
 | Task engine | `lib/taskEngine.ts` | Pure functions. The **only** path from model to state |
 | Scheduler | `lib/agents/scheduler.ts` | EDF + time-boxing. **No model runs here** |
@@ -128,6 +128,6 @@ Only `GROQ_API_KEY` is required. Model choice is overridable:
 ```
 GROQ_DIALOGUE_MODEL=openai/gpt-oss-20b
 GROQ_PLANNER_MODEL=openai/gpt-oss-120b
-GROQ_STT_MODEL=whisper-large-v3-turbo
+GROQ_STT_MODEL=whisper-large-v3
 GROQ_TTS_MODEL=canopylabs/orpheus-v1-english
 ```

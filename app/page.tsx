@@ -28,7 +28,8 @@ export default function Home() {
     <main className="relative z-10 mx-auto flex min-h-screen max-w-[1560px] flex-col gap-8 px-6 py-8 xl:px-10">
       <header className="flex flex-wrap items-end justify-between gap-5">
         <div>
-          <h1 className="font-display text-[3.4rem] leading-[0.95] text-white">RingList</h1>
+          <h1 className="font-display text-[3.4rem] leading-[0.95] text-white">Kukoo</h1>
+          <p className="mt-1 font-display text-[1.35rem] italic leading-none text-coral">We Call. You Do.</p>
           <p className="mt-2.5 max-w-xl text-[13.5px] leading-relaxed text-white/45">
             The to-do list that calls you, instead of waiting to be opened. Answer the phone and
             change your day by talking — the board on the right updates as you speak.

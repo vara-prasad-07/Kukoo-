@@ -2,9 +2,9 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "RingList — the to-do list that calls you",
+  title: "Kukoo — We Call. You Do.",
   description:
-    "A to-do list that starts the conversation. On-device voice loop, deterministic task engine, and a laptop handoff for heavy replanning.",
+    "The to-do list that calls you. On-device voice loop, deterministic task engine, and a laptop handoff for heavy replanning.",
 };
 
 export const viewport: Viewport = {

@@ -24,7 +24,7 @@ export function HomeScreen({ onCall }: { onCall: () => void }) {
   return (
     <div className="flex h-full flex-col px-6 pb-7 pt-4">
       <div className="mb-6 flex items-center justify-between text-[11px] font-medium text-white/45">
-        <span>RingList</span>
+        <span>Kukoo</span>
         <span className="font-mono">{clock}</span>
       </div>
 

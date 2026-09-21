@@ -97,8 +97,10 @@ export function useCallController() {
     stopRing.current?.();
     blip("connect");
     store.answer();
-    // Get the permission dialog out of the way now, not mid-sentence later.
-    void recorder.prewarm();
+    // Open the mic for the whole call. This both gets the permission dialog out
+    // of the way and — more importantly — means pressing the mic later starts
+    // recording instantly, instead of losing the first word to stream setup.
+    void recorder.openMic();
 
     try {
       const res = await fetch("/api/brief", {
@@ -120,7 +122,7 @@ export function useCallController() {
 
   const hangUp = useCallback(() => {
     stopSpeech();
-    void recorder.stop();
+    recorder.closeMic();
     resetCapture();
     blip("end");
     store.hangUp();
@@ -181,7 +183,7 @@ export function useCallController() {
     tapModeRef.current = false;
     setListenMode("idle");
 
-    const { blob, peak, durationMs } = await recorder.stop();
+    const { blob, peak, durationMs, ext } = await recorder.stop();
     if (!blob) {
       useCall.getState().setVoice("idle");
       return;
@@ -207,7 +209,7 @@ export function useCallController() {
 
     try {
       const fd = new FormData();
-      fd.append("audio", blob, "speech.webm");
+      fd.append("audio", blob, `speech.${ext}`);
       const res = await fetch("/api/stt", { method: "POST", body: fd });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Transcription failed");
